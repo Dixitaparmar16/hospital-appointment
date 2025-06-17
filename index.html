@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCare Hospital - Appointment Booking</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
+
+<style>
+ {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #1a73e8;
+  --secondary-color: #34a853;
+  --accent-color: #fbbc05;
+  --text-color: #333;
+  --light-yellow: #FFFFE0;
+  --medium-yellow: #FFEB3B;
+  --yellow: #FFFF00;
+
+  --white: #ffffff;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background-color: var(--light-yellow);
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+ul {
+  list-style: none;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background-color: var(--secondary-color);
+}
+
+.btn {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 12px 25px;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #0d5bbd;
+  transform: translateY(-2px);
+}
+
+.btn-full {
+  width: 100%;
+  text-align: center;
+}
+
+/* Header Styles */
+header {
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+
+.logo h1 {
+  color: var(--primary-color);
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+}
+
+.logo i {
+  margin-right: 10px;
+  color: var(--secondary-color);
+}
+
+nav ul {
+  display: flex;
+}
+
+nav ul li {
+  margin-left: 20px;
+}
+
+nav ul li a {
+  color: var(--text-color);
+  font-weight: 500;
+  padding: 10px 5px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+nav ul li a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+nav ul li a:hover::after,
+nav ul li a.active::after {
+  width: 100%;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/placeholder.svg?height=800&width=1600")
+    no-repeat center center / cover;
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--white);
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px;
+  animation: fadeInDown 1s ease;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  animation: fadeInUp 1s ease;
+}
+
+.hero-content .btn {
+  animation: fadeIn 1.5s ease;
+}
+
+/* Services Section */
+.services {
+  padding: 80px 0;
+  background-color: var(--white);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.service-card {
+  background-color: var(--light-red);
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+}
+
+.service-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.service-card i {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.service-card h3 {
+  margin-bottom: 15px;
+  color: var(--primary-color);
+}
+
+/* Doctors Section */
+.doctors {
+  padding: 80px 0;
+  background-color: var(--light-red);
+}
+
+.doctors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.doctor-card {
+  background-color: var(--white);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.doctor-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.doctor-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.doctor-card h3,
+.doctor-card p {
+  padding: 10px 20px;
+  text-align: center;
+}
+
+.doctor-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 5px;
+}
+
+.doctor-card p {
+  color: var(--dark-gray);
+  font-style: italic;
+}
+
+/* Appointment Section */
+.appointment {
+  padding: 80px 0;
+  background-color: var(--white);
+}
+
+.appointment-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: var(--light-gray);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--medium-gray);
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+/* My Appointments Section */
+.my-appointments {
+  padding: 80px 0;
+  background-color: var(--light-gray);
+}
+
+.appointments-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.appointments-list {
+  background-color: var(--white);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.appointment-card {
+  border: 1px solid var(--medium-gray);
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 15px;
+  background-color: var(--white);
+  transition: all 0.3s ease;
+}
+
+.appointment-card:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.appointment-card h3 {
+  color: var(--primary-color);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.appointment-card p {
+  margin-bottom: 5px;
+}
+
+.appointment-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.appointment-actions button {
+  margin-left: 10px;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-cancel {
+  background-color: #f44336;
+  color: var(--white);
+  border: none;
+}
+
+.btn-cancel:hover {
+  background-color: #d32f2f;
+}
+
+.no-appointments {
+  text-align: center;
+  color: var(--dark-gray);
+  padding: 20px;
+}
+
+/* Footer */
+footer {
+  background-color: #333;
+  color: var(--white);
+  padding: 60px 0 20px;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.footer-section h3 {
+  color: var(--white);
+  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.footer-section h3::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  background-color: var(--accent-color);
+}
+
+.footer-section p {
+  margin-bottom: 10px;
+}
+
+.social-icons {
+  margin-top: 20px;
+}
+
+.social-icons a {
+  color: var(--white);
+  margin-right: 15px;
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+  color: var(--accent-color);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Notification */
+.notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  border-radius: 5px;
+  color: var(--white);
+  font-weight: 500;
+  z-index: 1000;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.notification.success {
+  background-color: var(--secondary-color);
+}
+
+.notification.error {
+  background-color: #f44336;
+}
+
+.notification.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .hero-content h1 {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  nav {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    background-color: var(--white);
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    transition: all 0.3s ease;
+  }
+
+  nav.active {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  nav ul {
+    flex-direction: column;
+  }
+
+  nav ul li {
+    margin: 10px 0;
+  }
+
+  .hero-content h1 {
+    font-size: 2.2rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .appointment-container {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .hero-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1><i class="fas fa-hospital"></i> MediCare</h1>
+             </div>
+            <nav>
+                <ul>
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#doctors">Doctors</a></li>
+                    <li><a href="#book">Book Appointment</a></li>
+                    <li><a href="#appointments">My Appointments</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Your Health Is Our Priority</h1>
+                <p>Book your appointment online and skip the waiting line</p>
+                <a href="#book" class="btn">Book Appointment</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-heartbeat"></i>
+                    <h3>Cardiology</h3>
+                    <p>Expert care for heart-related conditions with state-of-the-art diagnostic equipment.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>Neurology</h3>
+                    <p>Specialized treatment for neurological disorders by experienced neurologists.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-tooth"></i>
+                    <h3>Dental Care</h3>
+                    <p>Comprehensive dental services from routine check-ups to advanced procedures.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-eye"></i>
+                    <h3>Ophthalmology</h3>
+                    <p>Complete eye care services including vision tests and surgical procedures.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="doctors" class="doctors">
+        <div class="container">
+            <h2 class="section-title">Our Doctors</h2>
+            <div class="doctors-grid">
+                <div class="doctor-card">
+                    <img src="1.png" height="20%" width="20%" alt="Dr.dhwani shah">
+                    <h3>Dr.dhwani shah </h3>                    
+                    <p>Cardiology</p>
+                </div>
+                <div class="doctor-card">
+                    <img src="2.png" height="20%" width="20%" alt="Dr.bhavin patel ">
+                    <h3>Dr bhavin patel</h3>
+                    <p>Neurology</p>
+                </div>
+                <div class="doctor-card">
+                    <img src="5.png" height="20%" width="20%" alt="Dr. hitesh modi">
+                    <h3>Dr hitesh modi</h3>
+                    <p>Dental Care</p>
+                </div>
+                <div class="doctor-card">
+                    <img src="3.png" height="20%" width="20%" alt="Dr. vishal soni">
+                    <h3>Dr vishal soni</h3>
+                    <p>Ophthalmology</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="book" class="appointment">
+        <div class="container">
+            <h2 class="section-title">Book an Appointment</h2>
+            <div class="appointment-container">
+                <form id="appointment-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <select id="department" name="department" required>
+                            <option value="">Select Department</option>
+                            <option value="cardiology">Cardiology</option>
+                            <option value="neurology">Neurology</option>
+                            <option value="dental">Dental Care</option>
+                            <option value="ophthalmology">Ophthalmology</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="doctor">Doctor</label>
+                        <select id="doctor" name="doctor" required>
+                            <option value="">Select Doctor</option>
+<option>mr.arvind shah</option>
+<option>mr.hitesh modi</option>
+<option>mr.bhavin patel</option>
+<option>miss.dhwani shah</option>
+<option>mr.vishal soni</option>
+
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Appointment Date</label>
+                        <input type="date" id="date" name="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Appointment Time</label>
+                        <select id="time" name="time" required>
+                            <option value="">Select Time</option>
+<option>8.00 Am</option>
+<option>9.00 Am</option>
+<option>9.30 Am</option>
+<option>10.00 Am</option>
+<option>10.30 Am</option>
+<option>11.00 Am</option>
+<option>11.30 Am</option>
+<option>12 pm</option>
+<option>2.00 pm</option>
+<option>2.30 pm</option>
+<option>3.00 pm</option>
+<option>4.00 pm</option>
+<option>5.00 pm</option>
+
+
+
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Additional Information</label>
+                        <textarea id="message" name="message" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-full">Book Appointment</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="appointments" class="my-appointments">
+        <div class="container">
+            <h2 class="section-title">My Appointments</h2>
+            <div class="appointments-container">
+                <div class="appointments-list" id="appointments-list">
+                    <p class="no-appointments">No appointments found. Book an appointment to see it here.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>MediCare Hospital</h3>
+                    <p>Providing quality healthcare services for over 25 years.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Hospital Street, City, Country</p>
+                    <p><i class="fas fa-phone"></i> 9365428475</p>
+                    <p><i class="fas fa-envelope"></i> info@medicare.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Working Hours</h3>
+                    <p>Monday - Friday: 8:00 AM - 8:00 PM</p>
+                    <p>Saturday: 9:00 AM - 5:00 PM</p>
+                    <p>Sunday: 10:00 AM - 2:00 PM</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 MediCare Hospital. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="notification" class="notification"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+  // Mobile Menu Toggle
+  const menuToggle = document.querySelector(".menu-toggle")
+  const nav = document.querySelector("nav")
+
+  menuToggle.addEventListener("click", () => {
+    nav.classList.toggle("active")
+  })
+
+
+  // Close menu when clicking on a nav item
+  const navItems = document.querySelectorAll("nav ul li a")
+  navItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      nav.classList.remove("active")
+    })
+  })
+
+  // Smooth scrolling for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      e.preventDefault()
+      document.querySelector(this.getAttribute("href")).scrollIntoView({
+        behavior: "smooth",
+      })
+    })
+  })
+
+  // Department and Doctor selection logic
+  const departmentSelect = document.getElementById("department")
+  const doctorSelect = document.getElementById("doctor")
+
+  const doctors = {
+    cardiology: ["Dr. Sarah Johnson", "Dr. Robert Smith"],
+    neurology: ["Dr. Michael Chen", "Dr. Lisa Brown"],
+    dental: ["Dr. Emily Rodriguez", "Dr. David Kim"],
+    ophthalmology: ["Dr. James Wilson", "Dr. Maria Garcia"],
+  }
+
+  departmentSelect.addEventListener("change", function () {
+    const department = this.value
+    doctorSelect.innerHTML = '<option value="">Select Doctor</option>'
+
+    if (department && doctors[department]) {
+      doctors[department].forEach((doctor) => {
+        const option = document.createElement("option")
+        option.value = doctor
+        option.textContent = doctor
+        doctorSelect.appendChild(option)
+      })
+    }
+  })
+
+  // Date and Time selection logic
+  const dateInput = document.getElementById("date")
+  const timeSelect = document.getElementById("time")
+
+  // Set min date to today
+  const today = new Date()
+  const yyyy = today.getFullYear()
+  const mm = String(today.getMonth() + 1).padStart(2, "0")
+  const dd = String(today.getDate()).padStart(2, "0")
+  const formattedToday = `${yyyy}-${mm}-${dd}`
+
+  dateInput.setAttribute("min", formattedToday)
+
+  dateInput.addEventListener("change", function () {
+    const selectedDate = new Date(this.value)
+    const dayOfWeek = selectedDate.getDay() // 0 is Sunday, 6 is Saturday
+
+    timeSelect.innerHTML = '<option value="">Select Time</option>'
+
+    // Different time slots based on day of week
+    let startHour, endHour
+
+    if (dayOfWeek === 0) {
+      // Sunday
+      startHour = 10
+      endHour = 14
+    } else if (dayOfWeek === 6) {
+      // Saturday
+      startHour = 9
+      endHour = 17
+    } else {
+      // Weekdays
+      startHour = 8
+      endHour = 20
+    }
+
+    // Generate time slots
+    for (let hour = startHour; hour < endHour; hour++) {
+      for (let minute = 0; minute < 60; minute += 30) {
+        if (hour === endHour - 1 && minute === 30) continue // Skip the last slot
+
+        const formattedHour = hour.toString().padStart(2, "0")
+        const formattedMinute = minute.toString().padStart(2, "0")
+        const timeSlot = `${formattedHour}:${formattedMinute}`
+
+        const option = document.createElement("option")
+        option.value = timeSlot
+
+        // Convert to 12-hour format for display
+        let displayHour = hour % 12
+        if (displayHour === 0) displayHour = 12
+        const amPm = hour < 12 ? "AM" : "PM"
+        option.textContent = `${displayHour}:${formattedMinute} ${amPm}`
+
+        timeSelect.appendChild(option)
+      }
+    }
+  })
+
+  // Form submission
+  const appointmentForm = document.getElementById("appointment-form")
+  const appointmentsList = document.getElementById("appointments-list")
+
+  appointmentForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+
+    // Form validation
+    const name = document.getElementById("name").value
+    const email = document.getElementById("email").value
+    const phone = document.getElementById("phone").value
+    const department = document.getElementById("department").value
+    const doctor = document.getElementById("doctor").value
+    const date = document.getElementById("date").value
+    const time = document.getElementById("time").value
+
+    if (!name || !email || !phone || !department || !doctor || !date || !time) {
+      showNotification("Please fill in all required fields", "error")
+      return
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      showNotification("Please enter a valid email address", "error")
+      return
+    }
+
+    // Phone validation
+    const phoneRegex = /^\d{10}$/
+    if (!phoneRegex.test(phone.replace(/\D/g, ""))) {
+      showNotification("Please enter a valid 10-digit phone number", "error")
+      return
+    }
+
+    // Create appointment object
+    const appointment = {
+      id: Date.now(),
+      name,
+      email,
+      phone,
+      department,
+      doctor,
+      date,
+      time,
+      message: document.getElementById("message").value,
+    }
+
+    // Save appointment to local storage
+    saveAppointment(appointment)
+
+    // Show success notification
+    showNotification("Appointment booked successfully!", "success")
+
+    // Reset form
+    appointmentForm.reset()
+
+    // Update appointments list
+    displayAppointments()
+
+    // Scroll to appointments section
+    document.querySelector("#appointments").scrollIntoView({
+      behavior: "smooth",
+    })
+  })
+
+  // Function to save appointment to local storage
+  function saveAppointment(appointment) {
+    const appointments = JSON.parse(localStorage.getItem("appointments")) || []
+    appointments.push(appointment)
+    localStorage.setItem("appointments", JSON.stringify(appointments))
+  }
+
+  // Function to display appointments
+  function displayAppointments() {
+    const appointments = JSON.parse(localStorage.getItem("appointments")) || []
+
+    if (appointments.length === 0) {
+      appointmentsList.innerHTML =
+        '<p class="no-appointments">No appointments found. Book an appointment to see it here.</p>'
+      return
+    }
+
+    appointmentsList.innerHTML = ""
+
+    appointments.forEach((appointment) => {
+      // Format date for display
+      const appointmentDate = new Date(appointment.date)
+      const formattedDate = appointmentDate.toLocaleDateString("en-US", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+
+      // Convert time to 12-hour format
+      let [hours, minutes] = appointment.time.split(":")
+      const amPm = Number.parseInt(hours) >= 12 ? "PM" : "AM"
+      hours = Number.parseInt(hours) % 12
+      if (hours === 0) hours = 12
+      const formattedTime = `${hours}:${minutes} ${amPm}`
+
+      const appointmentCard = document.createElement("div")
+      appointmentCard.className = "appointment-card"
+      appointmentCard.innerHTML = `
+                <h3>
+                    ${appointment.doctor}
+                    <span>${appointment.department}</span>
+                </h3>
+                <p><strong>Patient:</strong> ${appointment.name}</p>
+                <p><strong>Date:</strong> ${formattedDate}</p>
+                <p><strong>Time:</strong> ${formattedTime}</p>
+                <p><strong>Contact:</strong> ${appointment.phone} | ${appointment.email}</p>
+                ${appointment.message ? `<p><strong>Additional Info:</strong> ${appointment.message}</p>` : ""}
+                <div class="appointment-actions">
+                    <button class="btn-cancel" data-id="${appointment.id}">Cancel Appointment</button>
+                </div>
+            `
+
+      appointmentsList.appendChild(appointmentCard)
+    })
+
+    // Add event listeners to cancel buttons
+    document.querySelectorAll(".btn-cancel").forEach((button) => {
+      button.addEventListener("click", function () {
+        const id = Number.parseInt(this.getAttribute("data-id"))
+        cancelAppointment(id)
+      })
+    })
+  }
+
+  // Function to cancel appointment
+  function cancelAppointment(id) {
+    let appointments = JSON.parse(localStorage.getItem("appointments")) || []
+    appointments = appointments.filter((appointment) => appointment.id !== id)
+    localStorage.setItem("appointments", JSON.stringify(appointments))
+
+    displayAppointments()
+    showNotification("Appointment cancelled successfully", "success")
+  }
+
+  // Function to show notification
+  function showNotification(message, type) {
+    const notification = document.getElementById("notification")
+    notification.textContent = message
+    notification.className = `notification ${type}`
+    notification.classList.add("show")
+
+    setTimeout(() => {
+      notification.classList.remove("show")
+    }, 3000)
+  }
+
+  // Display appointments on page load
+  displayAppointments()
+
+  // Add active class to current nav item based on scroll position
+  window.addEventListener("scroll", () => {
+    const sections = document.querySelectorAll("section")
+    const navLinks = document.querySelectorAll("nav ul li a")
+
+    let current = ""
+
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop
+      const sectionHeight = section.clientHeight
+
+      if (pageYOffset >= sectionTop - 200) {
+        current = section.getAttribute("id")
+      }
+    })
+
+    navLinks.forEach((link) => {
+      link.classList.remove("active")
+      if (link.getAttribute("href") === `#${current}`) {
+        link.classList.add("active")
+      }
+    })
+  })
+})
+</script>
